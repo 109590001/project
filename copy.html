@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>test 01</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-proxy-event-component/dist/aframe-proxy-event-component.min.js"></script>
+    <script src="scripts/aframe-render-order-component.js"></script>
+    <script src="scripts/aframe-draw-shader.js"></script>
+    <script src="scripts/aframe-attach-to.js"></script>
+    <script src="scripts/com.js"></script>
+
+</head>
+
+<body>
+    
+    <a-scene>
+
+<!-- 音樂 -->
+        <audio id="effect" preload="auto" src="effect.mp3"></audio>
+        <audio id="walk" preload="auto" src="walk.mp3"></audio>
+        <audio id="wind" preload="auto" src="wind.mp3"></audio>
+        <audio id="bgm" preload="auto" src="bgm.mp3"></audio>
+        <audio id="sw" preload="auto" src="smallwind.mp3"></audio>
+
+        <a-entity id="river" geometry="primitive: plane" material="color: blue"
+          position="0 0 0" sound="src: #sw; autoplay: true; loop: true;" 
+          event-set__change="_event: click; sound: src: #bgm; _target: #river; _delay: 300;"
+          event-set__A="_event: mouseenter; sound: src: #wind;"
+          ></a-entity>
+
+<!-- 場景 -->
+        <a-assets>
+            <img id="city" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg">
+            <img id="cubes" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/cubes.jpg"/>
+        </a-assets>
+
+        <a-sky id = "image-360" src="#classroom" rotation="0 240 0"></a-sky>
+        
+        
+<!-- 滑鼠 -->
+        <a-camera>
+            <a-cursor cursor="fuse: true; fuseTimeout: 1000" raycaster="objects: [raycastable=true]"></a-cursor>
+            <a-entity id="hud" position="0 0 -0.9">
+                <a-entity id="camera" camera look-controls></a-entity>
+            </a-entity>
+
+        </a-camera>
+                
+<!-- 圖片 -->
+        <a-assets>
+            <img id="jaemin" src="./images/b.jpg" />
+            <img id="doyoung" src="./images/sea.jpeg" />
+            <img id="marklee" src="./images/city.jpg" />
+            <img id="yang" src="./images/b.jpg" />
+            <img id="classroom" src="./images/classroom.jpeg " />
+            <img id="sf" src="./images/sport_field.jpg " />
+            <img id="Bhallway" src="./images/Bhallway.jpg " />
+            <img id="Mhallway" src="./images/Mhallway.jpg " />
+            <img id="Blightroad" src="./images/BLightRoad.jpeg " />
+        </a-assets>
+
+        <a-image id="pic" position="0 1.6 -1" width="0.3" height="0.3" material=" src:#jaemin;" visible= "false"
+                event-set__change="_event: click; visible: true;"
+                ></a-image>
+
+
+
+    
+
+<!-- 閱讀按鈕 -->
+        <a-plane id="read-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+        width="3" position="0 -6 -9" raycastable="true"
+        event-set="_event: click; raycastable: true; visible: false; _delay: 300;"
+        proxy-event="event: click; to: #pic;"
+        sound="src: #effect; on: click; positional: false;">
+        <a-plane draw-text="text:閱讀; color: #fff" position="0 0 0.02"></a-plane>
+        </a-plane>
+
+<!-- 離開按鈕 -->
+        <a-plane id = "leave-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+        width="3" position="12 1 -11" raycastable="true" rotation="0 -50 0"
+        event-set="_event: click; raycastable: true; visible: false;position: 100 -2 -9; _delay: 300;"
+        event-set__change="_event: click; src: #Bhallway; _target: #image-360; _delay: 300;"
+        event-set__rd-bt="_event: click; visible: false ;position: 100 -2 -9; _target: #read-bt; _delay: 300;"
+        event-set__pic="_event: click; visible: false; _target: #pic; _delay: 300;"
+        event-set__A-bt="_event: click; visible: true;position:-5.5 2 10;rotation: 0 -210 0; _target: #A-bt; _delay: 300;"
+        event-set__C-bt="_event: click; visible: true;position:-6 -2 -9;rotation: 10 70 0; _target: #C-bt; _delay: 300;"
+        event-set__B-bt="_event: click; visible: true;position:5.3 0 -9;rotation: 0 -34 0; _target: #B-bt; _delay: 300;"
+        event-set__setBGM="_event: click; src: #bgm; _target: #river; _delay: 300;"
+        sound="src: #walk; on: click; positional: false;"
+        proxy-event="event: click; to: #river;as: mouseenter"
+        >
+        <a-plane draw-text="text:離開; color: #fff" position="0 0 0.02"></a-plane>
+        </a-plane>
+
+
+<!-- A.下樓 -->
+        <a-plane id="A-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+        width="3" position="1000 -2 -9" raycastable="true" visible= "false" rotation="0 -50 0"
+        event-set="_event: click; raycastable: true; visible: false;position: 1000 -2 -9; _delay: 300;"
+        event-set__light="_event: click; visible: true; _target: #light; _delay: 300;"
+        event-set__btb_off="_event: click; visible: false;position: 1000 -2 -9; _target: #B-bt; _delay: 300;"
+        event-set__btc_off="_event: click; visible: false;position: 1000 -2 -9; _target: #C-bt; _delay: 300;"
+        event-set__A-a-bt="_event: click; visible: true;position:-2 1 10;rotation: 0 -210 0; _target: #A-a-bt; _delay: 300;"
+        event-set__A-b-bt="_event: click; visible: true;position:-7 1 7;rotation: 0 -210 0; _target: #A-b-bt; _delay: 300;"
+        ><a-plane draw-text="text:下樓; color: #fff" position="0 0 0.02"></a-plane>
+        </a-plane>
+<!-- 是否在下樓過程中使用'手電筒' -->
+        <a-plane id="light" color="#CCC" height="8" width="15" position="-5.5 2 10" visible= "false" rotation="0 -207 0"
+        transparent= false; opacity= 0.5;>
+        <a-plane draw-text="text:樓梯間燈光昏暗，是否在下樓過程中使用'手電筒'？; color: rgb(0, 0, 0)" position="0 1 0.02" transparent= false;></a-plane>
+            </a-plane>
+<!-- a.開手電筒 -->
+            <a-plane id="A-a-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+            width="2" position="1000 -2 -9" raycastable="true" visible= "false" rotation="0 -45 0"
+            event-set="_event: click; raycastable: true; visible: false;position: 1000 -2 -9; _delay: 300;"
+            event-set__bt_off="_event: click; visible: false;position: 1000 -2 -9; _target: #A-b-bt; _delay: 300;"
+            event-set__light_off="_event: click; visible: false; _target: #light; _delay: 300;"
+            event-set__change="_event: click; src: #Blightroad; _target: #image-360; _delay: 300;"
+            event-set__btB_on="_event: click; visible: true;position: 10 3 -9; _target: #A-a-B-bt; _delay: 300;"
+            event-set__btC_on="_event: click; visible: true;position: 4 2 -15;rotation: 0 -20 0; _target: #A-a-C-bt; _delay: 300;"
+            sound="src: #walk; on: click; positional: false;"
+            >
+            <a-plane draw-text="text:是; color: #fff" position="0 0 0.02"></a-plane>
+            </a-plane>
+<!-- b.不開手電筒 -->
+            <a-plane id="A-b-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+            width="2" position="1000 -2 -9" raycastable="true" visible= "false" rotation="0 -50 0"
+            event-set="_event: click; raycastable: true; visible: false;position: 1000 -2 -9; _delay: 300;"
+            event-set__bt_off="_event: click; visible: false;position: 1000 -2 -9; _target: #A-a-bt; _delay: 300;"
+            event-set__light_off="_event: click; visible: false; _target: #light; _delay: 300;"
+            event-set__change="_event: click; src: #marklee; _target: #image-360; _delay: 300;"
+            event-set__btB_on="_event: click; visible: true;position: 12 -3 -9; _target: #A-a-B-bt; _delay: 300;"
+            event-set__btC_on="_event: click; visible: true;position: 0 -2 -9; _target: #A-a-C-bt; _delay: 300;"
+            sound="src: #walk; on: click; positional: false;"
+            proxy-event="event: click; to: #river;as: click"
+            >
+            <a-plane draw-text="text:否; color: #fff" position="0 0 0.02"></a-plane>
+            </a-plane>
+<!-- B走向鳥居 -->
+                <a-plane id = "A-a-B-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+                width="3" position="1200 -3 -9" raycastable="true" rotation="0 -50 0"
+                event-set="_event: click; raycastable: true; visible: false;position: 1000 -2 -9; _delay: 300;"
+                event-set__bt_off="_event: click; visible: false;position: 1000 -2 -9; _target: #A-a-C-bt; _delay: 300;"
+                event-set__change="_event: click; src: #sf; _target: #image-360; _delay: 300;"
+                event-set__open="_event: click;visible:true; _target: #piic; _delay: 300;"
+                >
+                <a-plane draw-text="text:前往鳥居; color: #fff" position="0 0 0.02"></a-plane>
+                </a-plane>
+
+<!-- 鳥居的守則 -->
+                <a-image id="piic" position="0 1.6 -1" width="0.4" height="0.4" material=" src:#yang;" visible= "false">
+                </a-image>
+<!-- C走向一樓走廊中段 -->
+                <a-plane id = "A-a-C-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+                width="3" position="1000 -2 -9" raycastable="true" rotation="0 0 0"
+                event-set="_event: click; raycastable: true; visible: false;position: 1000 -2 -9; _delay: 300;"
+                event-set__bt_off="_event: click; visible: false;position: 1000 -2 -9; _target: #A-a-B-bt; _delay: 300;"
+                event-set__change="_event: click; src: #cubes; _target: #image-360; _delay: 300;"
+                >
+                <a-plane draw-text="text:繼續向前; color: #fff" position="0 0 0.02"></a-plane>
+                </a-plane>
+
+<!-- B.前往走廊 -->
+        <a-plane id="B-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+        width="3" position="1000 -2 -9" raycastable="true" visible= "false" rotation="0 30 0"
+        event-set="_event: click; raycastable: true; visible: false;position: 1000 -2 -9; _delay: 300;"
+        event-set__bta_off="_event: click; visible: false;position: 1000 -2 -9; _target: #A-bt; _delay: 300;"
+        event-set__btc_off="_event: click; visible: false;position: 1000 -2 -9; _target: #C-bt; _delay: 300;"
+        event-set__change="_event: click; src: #Mhallway; _target: #image-360; _delay: 300;"
+        sound="src: #walk; on: click; positional: false;"
+        ><a-plane draw-text="text:前往走廊; color: #fff" position="0 0 0.02"></a-plane>
+        </a-plane>
+
+
+<!-- C.回到教室 -->
+        <a-plane id="C-bt" fuse-button="color: rgb(0, 0, 0) ; barColor: rgb(255, 255, 255); fuseTimeout: 1000;" 
+        width="3" raycastable="true" visible= "false"
+        event-set="_event: click; raycastable: true; visible: false;position: 1000 -2 -9; _delay: 300;"
+        event-set__bta_off="_event: click; visible: false;position: 1000 -2 -9; _target: #A-bt; _delay: 300;"
+        event-set__btb_off="_event: click; visible: false;position: 1000 -2 -9; _target: #B-bt; _delay: 300;"
+        event-set__rd-bt="_event: click; visible: true ;position: -3.8 -5 -7;rotation: 0 35 0; _target: #read-bt; _delay: 300;"
+        event-set__leave-bt="_event: click; visible: true ;position:4.7 1 -15;rotation: 0 -5 0; _target: #leave-bt; _delay: 300;"
+        event-set__change="_event: click; src: #classroom; _target: #image-360; rotation: 0 240 0; _delay: 300;"
+        event-set__changer="_event: click; rotation: 0 270 0; _target: #image-360; _delay: 300;"
+        ><a-plane draw-text="text:返回教室; color: #fff"></a-plane>
+        </a-plane>
+        
+    </a-scene>
+</body>
+
+</html>
